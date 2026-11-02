@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.local
+.n8n-backup-*.json
+source-project.json
