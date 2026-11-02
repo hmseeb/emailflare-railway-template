@@ -80,7 +80,8 @@ To rotate the admin password, change `ADMIN_TOKEN` (32 characters minimum) and r
 
 - *"Invalid token" at login*: paste `ADMIN_TOKEN` exactly, with no trailing space.
 - *Live key returns "API key not authorized for this domain"*: the `from` address must use a domain added under Domains and allowed on that key.
-- *Live sends fail with a Cloudflare error*: check the token scopes and that `CF_ACCOUNT_ID` belongs to the same account.
+- *Live key returns 502 "CF API error: Could not route to /client/v4/accounts/email/sending/send"*: `CF_ACCOUNT_ID` is empty or wrong. Test keys keep working meanwhile.
+- *Live sends fail with another Cloudflare error*: check the token scopes and that `CF_ACCOUNT_ID` belongs to the same account.
 
 ## Why Deploy EmailFlare API on Railway?
 
