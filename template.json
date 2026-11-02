@@ -5,7 +5,7 @@
     "EmailFlare": {
       "icon": "https://raw.githubusercontent.com/0xdps/emailflare/cf31f33bbb4a324d5353b8a5db0312fedc19618f/services/email-ui/public/favicon.svg",
       "source": {
-        "image": "ghcr.io/hmseeb/emailflare-railway-api:cf31f33-r1"
+        "image": "ghcr.io/hmseeb/emailflare-railway-api:cf31f33-r2"
       },
       "deploy": {
         "$note": "Image CMD /app/start-email-api.sh is kept (no start command). Upstream railway.json uses /health + ON_FAILURE.",

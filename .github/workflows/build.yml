@@ -13,7 +13,7 @@ permissions:
 env:
   # Upstream trunk commit this image is built from (0xdps/emailflare, MIT).
   UPSTREAM_SHA: cf31f33bbb4a324d5353b8a5db0312fedc19618f
-  TAG: cf31f33-r1
+  TAG: cf31f33-r2
 
 jobs:
   build:
@@ -24,6 +24,16 @@ jobs:
         with:
           repository: 0xdps/emailflare
           ref: ${{ env.UPSTREAM_SHA }}
+      - name: Patch upstream Dockerfile
+        # Upstream copies node_modules/.pnpm but not each workspace package's node_modules
+        # symlinks, so the server dies with "Cannot find package '@hono/node-server'".
+        # The symlinks are relative into /app/node_modules/.pnpm, which is copied.
+        run: |
+          sed -i '/^COPY --from=build-backend \/app\/services\/email-server\/dist/a\
+          COPY --from=build-backend /app/services/email-server/node_modules ./services/email-server/node_modules\
+          COPY --from=build-backend /app/services/emails/node_modules ./services/emails/node_modules\
+          COPY --from=build-backend /app/packages/email-core/node_modules ./packages/email-core/node_modules' deploy/docker/Dockerfile.email-api
+          grep -n 'node_modules' deploy/docker/Dockerfile.email-api
       - uses: docker/setup-buildx-action@v3
       - uses: docker/login-action@v3
         with:
