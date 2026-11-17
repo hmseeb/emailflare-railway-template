@@ -1,11 +1,11 @@
 {
-  "$note": "Build sheet for EmailFlare API (0xdps/emailflare, MIT), built from trunk commit cf31f33 of 2026-11-01. Upstream's own template (/deploy/emailflare, 'Cloudflare Email', 0xlabs-space) runs ghcr.io/0xdps/emailflare:latest = v2.0.2 of 2026-06-29, the pre-split layout; upstream never published the emailflare-api image its README names (only -staging builds, last s0.0.5 of 2026-08-13). So we build Dockerfile.email-api ourselves (.github/workflows/build.yml). Scope: the API product only, no Inbox, no Cloudflare Worker deploys. Policy gate: REVIEW (outbound mail). Mitigation: mail only ever leaves through the Cloudflare Email Sending API with the deployer's own token; there is no SMTP path in the code. Without CF credentials only test keys work, which store mail in the in-app Test Mailbox. One container: Caddy on $PORT serves the UI and proxies /api, /v1, /health to Node on 3001; embedded mesahub-server (SQLite) on 3002 keeps data in /data. upsert.py strips every $note key and mints fresh UUIDs.",
+  "$note": "Build sheet for EmailFlare API (0xdps/emailflare, MIT), built from trunk commit cf31f33 of 2026-11-01. Upstream's own template (/deploy/emailflare, 'Cloudflare Email', 0xlabs-space) runs ghcr.io/0xdps/emailflare:latest = v2.0.2 of 2026-06-29, the pre-split layout; upstream never published the emailflare-api image its README names (only -staging builds, last s0.0.5 of 2026-08-13). So we build Dockerfile.email-api ourselves (.github/workflows/build.yml). r3 (2026-11-17): same upstream tree (trunk HEAD 85cecbe is tree-identical to cf31f33), fresh base layers, mesahub-core fetched by exact commit 28aae9c instead of trunk. Scope: the API product only, no Inbox, no Cloudflare Worker deploys. Policy gate: REVIEW (outbound mail). Mitigation: mail only ever leaves through the Cloudflare Email Sending API with the deployer's own token; there is no SMTP path in the code. Without CF credentials only test keys work, which store mail in the in-app Test Mailbox. One container: Caddy on $PORT serves the UI and proxies /api, /v1, /health to Node on 3001; embedded mesahub-server (SQLite) on 3002 keeps data in /data. upsert.py strips every $note key and mints fresh UUIDs.",
   "name": "EmailFlare API",
   "services": {
     "EmailFlare": {
       "icon": "https://raw.githubusercontent.com/0xdps/emailflare/cf31f33bbb4a324d5353b8a5db0312fedc19618f/services/email-ui/public/favicon.svg",
       "source": {
-        "image": "ghcr.io/hmseeb/emailflare-railway-api:cf31f33-r2"
+        "image": "ghcr.io/hmseeb/emailflare-railway-api:cf31f33-r3"
       },
       "deploy": {
         "$note": "Image CMD /app/start-email-api.sh is kept (no start command). Upstream railway.json uses /health + ON_FAILURE.",
