@@ -2,7 +2,7 @@
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/emailflare-api)
 
-Build sheet (`template.json`), image build (`.github/workflows/build.yml`, upstream 0xdps/emailflare `cf31f33` plus a Dockerfile fix) and the journey test (`test/journey.sh`) for the EmailFlare API Railway template. Scripts: `upsert.py` writes the template from `template.json`, `build_source.py` mirrors it into a live project, `deploy_as_stranger.py` deploys it like the button does. The deployer guide below is the marketplace listing text.
+Build sheet (`template.json`), image build (`.github/workflows/build.yml`, upstream 0xdps/emailflare `cf31f33` plus `scripts/patch_dockerfile.py`: node_modules fix and mesahub-core fetched by exact commit, checked by `test/patch_test.sh`) and the journey test (`test/journey.sh`) for the EmailFlare API Railway template. Scripts: `upsert.py` writes the template from `template.json`, `build_source.py` mirrors it into a live project, `deploy_as_stranger.py` deploys it like the button does. The deployer guide below is the marketplace listing text.
 
 
 EmailFlare is a transactional email API with an admin dashboard. Your apps POST to one endpoint, and EmailFlare sends through the Cloudflare Email Sending API using your own Cloudflare account. The dashboard covers sending domains, reusable templates, scoped API keys, send logs, suppressions, mailing lists with one-click unsubscribe, and a Test Mailbox.
@@ -47,7 +47,7 @@ There are no required inputs. The admin password and session secret are generate
 2. Send a message:
 
 ```bash
-curl -X POST https://<your-domain>/v1/send \
+curl -X POST https://YOUR-DOMAIN/v1/send \
   -H "Authorization: Bearer eftest_..." \
   -H "Content-Type: application/json" \
   -d '{"from":"hello@example.com","to":"you@example.com","subject":"Hi","text":"It works"}'

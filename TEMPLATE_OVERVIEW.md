@@ -42,7 +42,7 @@ There are no required inputs. The admin password and session secret are generate
 2. Send a message:
 
 ```bash
-curl -X POST https://<your-domain>/v1/send \
+curl -X POST https://YOUR-DOMAIN/v1/send \
   -H "Authorization: Bearer eftest_..." \
   -H "Content-Type: application/json" \
   -d '{"from":"hello@example.com","to":"you@example.com","subject":"Hi","text":"It works"}'
